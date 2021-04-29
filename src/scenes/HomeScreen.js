@@ -23,14 +23,6 @@ const renderItem = (item) => {
         }}>
             <View
                 style={styles.containerItem}>
-                {/* <WebView
-                    source={{ uri: 'https://chunk.lab.zalo.ai/9abcbb353264db3a8275/9abcbb353264db3a8275' }}
-                    style={styles.videoStyle}
-                /> */}
-                {/* <MediaControls
-                        mainColor="#333"
-                        showOnStart={false}
-                    ></MediaControls> */}
                 <View >
                     <Text style={styles.text}>{item.title}</Text>
                     <Text style={styles.textContent}>{item.content}</Text>
