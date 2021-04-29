@@ -36,16 +36,16 @@ const listData = [{ title: 'test', content: 'abc', url: '' }]
 
 const HomeScreen = ({ navigation }) => (
     <SafeAreaView style={styles.container}>
-        <FlatList
-            data={listData}
-            renderItem={({ item }) => renderItem(item)}
-            keyExtractor={(item, index) => index.toString()} />
         <Button
             onPress={() => { navigation.navigate('AddNewStory', { reloadData: this.reloadData }) }}
             title="Add New"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
         />
+        <FlatList
+            data={listData}
+            renderItem={({ item }) => renderItem(item)}
+            keyExtractor={(item, index) => index.toString()} />
     </SafeAreaView>
 );
 
