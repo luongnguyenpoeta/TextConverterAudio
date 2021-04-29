@@ -6,43 +6,45 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Video from 'react-native-video';
-import { WebView } from 'react-native-webview';
+import SoundPlayer from 'react-native-sound-player';
 
 const Separator = () => (
     <View style={styles.separator} />
 );
 
-const onPressItem = (item) => { }
+const onPressItem = (item) => {
+
+}
 
 const renderItem = (item) => {
     return (
-      <View>
-        <View
-            style={styles.containerItem}>
-            
-            <WebView
-                source={{ uri: 'https://chunk.lab.zalo.ai/9abcbb353264db3a8275/9abcbb353264db3a8275' }}
-                style={styles.videoStyle}
-            />
-            <MediaControls
+        <TouchableOpacity onPress={(item) => {
+            SoundPlayer.playUrl('https://chunk.lab.zalo.ai/9abcbb353264db3a8275/9abcbb353264db3a8275')
+        }}>
+            <View
+                style={styles.containerItem}>
+                {/* <WebView
+                    source={{ uri: 'https://chunk.lab.zalo.ai/9abcbb353264db3a8275/9abcbb353264db3a8275' }}
+                    style={styles.videoStyle}
+                /> */}
+                {/* <MediaControls
                         mainColor="#333"
                         showOnStart={false}
-                    ></MediaControls>
-            <View >
-                <Text style={styles.text}>{item.title}</Text>
-                <Text style={styles.textContent}>{item.content}</Text>
+                    ></MediaControls> */}
+                <View >
+                    <Text style={styles.text}>{item.title}</Text>
+                    <Text style={styles.textContent}>{item.content}</Text>
+                </View>
             </View>
-            </View>
-            <View style={ styles.separateLine}/>
-    </View>
-  )
+            <View style={styles.separateLine} />
+        </TouchableOpacity>
+    )
 }
-const listData = [{title:'test', content: 'abc', url: ''}]
+const listData = [{ title: 'test', content: 'abc', url: '' }]
 
 const HomeScreen = ({ navigation }) => (
     <SafeAreaView style={styles.container}>
-         <FlatList
+        <FlatList
             data={listData}
             renderItem={({ item }) => renderItem(item)}
             keyExtractor={(item, index) => index.toString()} />
