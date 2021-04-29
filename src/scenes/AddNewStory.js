@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, ScrollView } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import { saveToDB, textToSpeech } from '../services/SpeechService';
 
 const Separator = () => (
@@ -7,8 +8,9 @@ const Separator = () => (
 );
 
 const AddNewStory = ({ navigation }) => {
-    const [textTitle, setTextTitle] = useState('');
+    const [textTitle, setTextTitle,] = useState('');
     const [text, setText] = useState('');
+    const [checked, setChecked] = useState('');
     return (
         < SafeAreaView style={styles.container} >
             <ScrollView>
@@ -18,6 +20,23 @@ const AddNewStory = ({ navigation }) => {
                     onChangeText={textTitle => setText(textTitle)}
                     defaultValue={text}
                 ></TextInput>
+                <Text style={styles.title}>Gender</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <RadioButton
+                        title='Female'
+                        value="1"
+                        status={checked === '1' ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked('1')}
+                    />
+                    <Text style={styles.title}>Female</Text>
+                    <RadioButton
+                        title='Male'
+                        value="3"
+                        status={checked === '3' ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked('3')}
+                    />
+                    <Text style={styles.title}>Male</Text>
+                </View>
                 <Text style={styles.title}>Content</Text>
                 <TextInput
                     multiline={true}
@@ -29,9 +48,9 @@ const AddNewStory = ({ navigation }) => {
                     title="Submit"
                     onPress={async () => {
                         // Post to Zalo AI
-                        const url = await textToSpeech(text)
+                        const url = await textToSpeech(text, int(checked))
                         // Save to db
-                        const obj = ({ 'title': textTitle, 'url': !url ? url : 'https://chunk.lab.zalo.ai/7ad8286da03c4962102d/7ad8286da03c4962102d' })
+                        const obj = ({ 'title': textTitle, 'url': !url ? url : 'https://chunk.lab.zalo.ai/7ad8286da03c4962102d/7ad8286da03c4962102d', 'speaker_id': checked })
                         navigation.pop()
                         this.props.reloadData(obj);
                     }}
