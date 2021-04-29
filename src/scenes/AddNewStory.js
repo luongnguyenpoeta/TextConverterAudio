@@ -26,7 +26,7 @@ const AddNewStory = ({ navigation }) => {
                     defaultValue={textTitle}
                 ></TextInput>
                 <Button
-                    title="Sunmit"
+                    title="Submit"
                     onPress={async () => {
                         // Post to Zalo AI
                         const url = await textToSpeech(text)
