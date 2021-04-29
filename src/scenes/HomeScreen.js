@@ -47,7 +47,7 @@ const HomeScreen = ({ navigation }) => (
             renderItem={({ item }) => renderItem(item)}
             keyExtractor={(item, index) => index.toString()} />
         <Button
-            onPress={() => { navigation.navigate('AddNewStory') }}
+            onPress={() => { navigation.navigate('AddNewStory', { reloadData: this.reloadData }) }}
             title="Add New"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
