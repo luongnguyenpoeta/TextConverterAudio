@@ -1,71 +1,71 @@
-import React from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, ScrollView } from 'react-native';
+import { saveToDB, textToSpeech } from '../services/SpeechService';
 
 const Separator = () => (
     <View style={styles.separator} />
 );
 
-const AddNewStory = () => (
-    <SafeAreaView style={styles.container}>
-        <View>
-            <Text style={styles.title}>
-                The title and onPress handler are required. It is recommended to set accessibilityLabel to help make your app usable by everyone.
-      </Text>
-            <Button
-                title="Press me"
-                onPress={() => Alert.alert('Simple Button pressed')}
-            />
-        </View>
-        <Separator />
-        <View>
-            <Text style={styles.title}>
-                Adjust the color in a way that looks standard on each platform. On  iOS, the color prop controls the color of the text. On Android, the color adjusts the background color of the button.
-      </Text>
-            <Button
-                title="Press me"
-                color="#f194ff"
-                onPress={() => Alert.alert('Button with adjusted color pressed')}
-            />
-        </View>
-        <Separator />
-        <View>
-            <Text style={styles.title}>
-                All interaction for the component are disabled.
-      </Text>
-            <Button
-                title="Press me"
-                disabled
-                onPress={() => Alert.alert('Cannot press this one')}
-            />
-        </View>
-        <Separator />
-        <View>
-            <Text style={styles.title}>
-                This layout strategy lets the title define the width of the button.
-      </Text>
-            <View style={styles.fixToText}>
+const AddNewStory = ({ navigation }) => {
+    const [textTitle, setTextTitle] = useState('');
+    const [text, setText] = useState('');
+    return (
+        < SafeAreaView style={styles.container} >
+            <ScrollView>
+                <Text style={styles.title}>Title</Text>
+                <TextInput
+                    style={styles.titleTextField} ter
+                    onChangeText={textTitle => setText(textTitle)}
+                    defaultValue={text}
+                ></TextInput>
+                <Text style={styles.title}>Content</Text>
+                <TextInput
+                    multiline={true}
+                    style={styles.inputTextField}
+                    onChangeText={text => setTextTitle(text)}
+                    defaultValue={textTitle}
+                ></TextInput>
                 <Button
-                    title="Left button"
-                    onPress={() => Alert.alert('Left button pressed')}
+                    title="Sunmit"
+                    onPress={async () => {
+                        // Post to Zalo AI
+                        const url = await textToSpeech(text)
+                        // Save to db
+                        const obj = ({ 'title': textTitle, 'url': !url ? url : 'https://chunk.lab.zalo.ai/7ad8286da03c4962102d/7ad8286da03c4962102d' })
+                        navigation.pop()
+                        this.props.reloadData(obj);
+                    }}
                 />
-                <Button
-                    title="Right button"
-                    onPress={() => Alert.alert('Right button pressed')}
-                />
-            </View>
-        </View>
-    </SafeAreaView>
-);
+            </ScrollView>
+            <Separator />
+        </SafeAreaView >
+    );
+};
 
 const styles = StyleSheet.create({
+    inputTextField: {
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'grey',
+        height: 200,
+        marginVertical: 8,
+    },
+    titleTextField: {
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'grey',
+        height: 50,
+        marginVertical: 8,
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         marginHorizontal: 16,
     },
     title: {
-        textAlign: 'center',
+        textAlign: 'left',
         marginVertical: 8,
+        fontSize: 18
     },
     fixToText: {
         flexDirection: 'row',

@@ -10,7 +10,7 @@ const Separator = () => (
 const HomeScreen = ({ navigation }) => (
     <SafeAreaView style={styles.container}>
         <Button
-            onPress={() => { navigation.navigate('AddNewStory') }}
+            onPress={() => { navigation.navigate('AddNewStory', { reloadData: this.reloadData }) }}
             title="Add New"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
